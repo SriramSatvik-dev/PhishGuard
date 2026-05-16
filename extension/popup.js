@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE      = "https://phishguard-production-e3d7.up.railway.app";
 
 // Elements (same as before)
 const urlDisplay   = document.getElementById("urlDisplay");
@@ -116,7 +116,7 @@ function showError(message) {
 // Opens dashboard in a new tab, or focuses
 // it if it's already open
 // ─────────────────────────────────────────
-const DASHBOARD_URL = "http://localhost:3000";
+const DASHBOARD_URL = "https://phishguard-dashboard-itbr.onrender.com";
 
 document.getElementById("dashboardLink").addEventListener("click", async () => {
   // Check if dashboard tab is already open
