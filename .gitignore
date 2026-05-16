@@ -1,7 +1,15 @@
-.env
+# Python
 venv/
 __pycache__/
-*.pkl
+*.pyc
+.env
+
+# Data files (too large for GitHub)
 ml/data/
-phishguard.db
+
+# Keep model files — Railway needs these
+# DO NOT add *.pkl here
+
+# Dashboard build output — not needed in repo
+dashboard/build/
 dashboard/node_modules/
