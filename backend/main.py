@@ -91,3 +91,15 @@ def scan_stats():
 def clear_scan_history():
     clear_history()
     return {"message": "History cleared"}
+
+@app.get("/debug")
+def debug():
+    import os
+    return {
+        "database_url_set"  : bool(os.getenv("DATABASE_URL")),
+        "vt_key_set"        : bool(os.getenv("VIRUSTOTAL_API_KEY")),
+        "model_exists"      : os.path.exists("ml/models/phishguard_model.pkl"),
+        "features_exists"   : os.path.exists("ml/models/feature_names.pkl"),
+        "cwd"               : os.getcwd(),
+        "files_in_root"     : os.listdir("."),
+    }
