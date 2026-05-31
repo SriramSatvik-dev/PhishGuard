@@ -32,8 +32,8 @@
 ],
 
   "host_permissions": [
-    "http://phishguard-production-e3d7.up.railway.app",
-    "http://*/*",
-    "https://*/*"
-  ]
+  "https://phishguard-production-e3d7.up.railway.app/*",
+  "http://*/*",
+  "https://*/*"
+]
 }
