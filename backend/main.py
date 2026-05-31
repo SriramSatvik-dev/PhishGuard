@@ -103,3 +103,29 @@ def debug():
         "cwd"               : os.getcwd(),
         "files_in_root"     : os.listdir("."),
     }
+
+@app.post("/debug-scan")
+async def debug_scan(request: ScanRequest):
+    url = request.url.strip()
+    
+    # Step 1 - features
+    features = extract_features(url)
+    
+    # Step 2 - ML prediction
+    ml_result = predict(features)
+    
+    # Step 3 - threat intel
+    vt_result = check_virustotal(url)
+    uh_result = check_urlhaus(url)
+    ti_result = {**vt_result, **uh_result}
+    
+    # Step 4 - DNS/WHOIS
+    dns_result = run_dns_whois(url)
+    
+    return {
+        "url"        : url,
+        "features"   : features,
+        "ml_result"  : ml_result,
+        "ti_result"  : ti_result,
+        "dns_result" : dns_result,
+    }
