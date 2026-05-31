@@ -1,13 +1,12 @@
 import requests
 
-# Make sure no trailing slash on BASE
 BASE = "https://phishguard-production-e3d7.up.railway.app"
 
 for url in ["https://www.google.com", "http://paypa1-secure-login.tk/verify"]:
-    r = requests.post(
-        f"{BASE}/debug-scan",    # single slash, POST method
-        json={"url": url}
-    )
-    import json
-    print(json.dumps(r.json(), indent=2))
-    print("="*60)
+    r = requests.post(f"{BASE}/scan", json={"url": url})
+    d = r.json()
+    print(f"URL: {url}")
+    print(f"Score: {d.get('risk_score')}")
+    print(f"Verdict: {d.get('verdict')}")
+    print(f"Flags: {d.get('flags')}")
+    print("="*50)

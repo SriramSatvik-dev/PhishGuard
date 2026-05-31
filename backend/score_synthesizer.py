@@ -36,35 +36,25 @@ def synthesize(ml_result: dict, ti_result: dict, dns_result: dict) -> dict:
     # A single hit here is far more reliable than
     # any ML model prediction.
     # ─────────────────────────────────────────
-    vt_malicious = ti_result.get("vt_malicious", 0)
-    vt_total     = ti_result.get("vt_total", 1)
+    vt_malicious  = ti_result.get("vt_malicious", 0)
+    vt_suspicious = ti_result.get("vt_suspicious", 0)
+    vt_total      = ti_result.get("vt_total", 1)
 
     if vt_malicious >= 5:
         score += 45
-        flags.append(
-            f"VirusTotal: {vt_malicious}/{vt_total} security engines "
-            f"confirmed malicious"
-        )
+        flags.append(f"VirusTotal: {vt_malicious}/{vt_total} engines confirmed malicious")
     elif vt_malicious >= 2:
         score += 30
-        flags.append(
-            f"VirusTotal: {vt_malicious}/{vt_total} engines flagged — "
-            f"treat with caution"
-        )
+        flags.append(f"VirusTotal: {vt_malicious}/{vt_total} engines flagged")
     elif vt_malicious == 1:
         score += 10
-        flags.append(
-            f"VirusTotal: 1 engine flagged — possible false positive, "
-            f"verify manually"
-        )
-
-    if ti_result.get("urlhaus_listed"):
-        score += 40
-        flags.append(
-            f"URLhaus: confirmed active malware distribution URL "
-            f"({ti_result.get('urlhaus_threat', 'malware')})"
-        )
-
+        flags.append(f"VirusTotal: 1 engine flagged — verify manually")
+    elif vt_suspicious >= 3:
+        score += 15
+        flags.append(f"VirusTotal: {vt_suspicious} engines marked suspicious")
+    elif vt_suspicious >= 1:
+        score += 8
+        flags.append(f"VirusTotal: {vt_suspicious} engines marked suspicious")
 
     # ─────────────────────────────────────────
     # DNS / WHOIS layer (max 25 points)
@@ -86,6 +76,10 @@ def synthesize(ml_result: dict, ti_result: dict, dns_result: dict) -> dict:
         elif age_days < 90:
             score += 5
             # Young but not alarming — no flag
+
+    if not dns_result.get("dns_resolves", True):
+        score += 10
+        flags.append("Domain does not resolve — likely fake or inactive")
 
     # Typosquatting check
     if dns_result.get("is_typosquat"):
