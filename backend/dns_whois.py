@@ -99,8 +99,17 @@ def check_typosquatting(domain: str) -> dict:
 def run_dns_whois(url: str) -> dict:
     domain = get_domain(url)
     result = {}
-    result["domain"] = domain        
-    result.update(check_whois(domain))
+    result["domain"] = domain
+
+    # WHOIS is blocked on Railway's network — skip it entirely
+    # to avoid slow timeouts on every request
+    result.update({
+        "domain_age_days"  : None,
+        "newly_registered" : False,   # ← don't assume newly registered
+        "registrar"        : None,
+        "whois_checked"    : False
+    })
+
     result.update(check_dns(domain))
     result.update(check_typosquatting(domain))
     return result

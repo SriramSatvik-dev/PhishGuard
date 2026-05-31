@@ -87,9 +87,6 @@ def synthesize(ml_result: dict, ti_result: dict, dns_result: dict) -> dict:
             score += 5
             # Young but not alarming — no flag
 
-    if not dns_result.get("dns_resolves") and not dns_result.get("whois_checked"):
-        score += 5
-
     # Typosquatting check
     if dns_result.get("is_typosquat"):
         similarity   = dns_result.get("similarity", 0)
