@@ -1,30 +1,42 @@
+import xgboost as xgb
 import joblib
-import pandas as pd
 import os
 
 BASE_DIR      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH    = os.path.join(BASE_DIR, "ml", "models", "final_model.pkl")
+MODEL_PATH    = os.path.join(BASE_DIR, "ml", "models", "final_model.json")
 FEATURES_PATH = os.path.join(BASE_DIR, "ml", "models", "feature_names.pkl")
 
-model         = joblib.load(MODEL_PATH)
-feature_names = joblib.load(FEATURES_PATH)
+print(f"Looking for model at: {MODEL_PATH}")
+print(f"Model exists: {os.path.exists(MODEL_PATH)}")
+
+if os.path.exists(MODEL_PATH):
+    model = xgb.XGBClassifier()
+    model.load_model(MODEL_PATH)
+    feature_names = joblib.load(FEATURES_PATH)
+    print("Model loaded successfully")
+else:
+    model         = None
+    feature_names = []
+    print("WARNING: Model not found")
 
 
 def predict(features: dict) -> dict:
-    """
-    Takes a feature dict from extract_features(),
-    returns ML verdict and confidence score.
-    """
-    # Build a dataframe with exactly the columns the model was trained on
-    # Missing features default to 0
+    if model is None:
+        return {
+            "ml_verdict"              : "unknown",
+            "ml_confidence"           : 0,
+            "ml_phishing_probability" : 0
+        }
+
+    import pandas as pd
     row = {f: features.get(f, 0) for f in feature_names}
     X   = pd.DataFrame([row])[feature_names]
 
-    prediction  = model.predict(X)[0]
+    prediction  = int(model.predict(X)[0])
     probability = model.predict_proba(X)[0]
 
     return {
-        "ml_verdict"    : "phishing" if prediction == 1 else "legitimate",
-        "ml_confidence" : round(float(probability[prediction]) * 100, 2),
-        "ml_phishing_probability": round(float(probability[1]) * 100, 2)
+        "ml_verdict"              : "phishing" if prediction == 1 else "legitimate",
+        "ml_confidence"           : round(float(probability[prediction]) * 100, 2),
+        "ml_phishing_probability" : round(float(probability[1]) * 100, 2)
     }
