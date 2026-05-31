@@ -1,12 +1,18 @@
 import requests
 
-BASE = "https://phishguard-production-e3d7.up.railway.app"
+BASE = "http://localhost:8000"
 
-for url in ["https://www.google.com", "http://paypa1-secure-login.tk/verify"]:
-    r = requests.post(f"{BASE}/scan", json={"url": url})
-    d = r.json()
-    print(f"URL: {url}")
-    print(f"Score: {d.get('risk_score')}")
-    print(f"Verdict: {d.get('verdict')}")
-    print(f"Flags: {d.get('flags')}")
-    print("="*50)
+tests = [
+    ("GET",  "/health",  None),
+    ("POST", "/scan",    {"url": "https://www.google.com"}),
+    ("POST", "/scan",    {"url": "http://paypa1-secure-login.tk/verify"}),
+    ("GET",  "/history", None),
+    ("GET",  "/stats",   None),
+]
+
+for method, path, body in tests:
+    if method == "GET":
+        r = requests.get(f"{BASE}{path}")
+    else:
+        r = requests.post(f"{BASE}{path}", json=body)
+    print(f"{method} {path} → {r.status_code} {'✅' if r.status_code == 200 else '❌'}")

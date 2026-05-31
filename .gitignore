@@ -4,12 +4,12 @@ __pycache__/
 *.pyc
 .env
 
-# Data files (too large for GitHub)
+# Data files — too large for GitHub
 ml/data/
 
-# Keep model files — Railway needs these
-# DO NOT add *.pkl here
-
-# Dashboard build output — not needed in repo
+# Dashboard build output
 dashboard/build/
 dashboard/node_modules/
+
+# Local database
+phishguard.db
