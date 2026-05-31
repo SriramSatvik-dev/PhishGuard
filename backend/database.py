@@ -20,12 +20,18 @@ DATABASE_URL = os.getenv(
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-engine = create_engine(
-    DATABASE_URL,
-    # These args only apply to SQLite — ignored by PostgreSQL
-    connect_args={"check_same_thread": False}
-    if "sqlite" in DATABASE_URL else {}
-)
+# Replace your current create_engine call with this:
+if "supabase" in DATABASE_URL or "amazonaws" in DATABASE_URL:
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"sslmode": "require"}
+    )
+else:
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"check_same_thread": False}
+        if "sqlite" in DATABASE_URL else {}
+    )
 
 SessionLocal = sessionmaker(bind=engine)
 Base         = declarative_base()
