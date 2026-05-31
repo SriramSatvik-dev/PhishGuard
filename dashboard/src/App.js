@@ -5,7 +5,7 @@ import RiskChart  from "./components/RiskChart";
 import ScanTable  from "./components/ScanTable";
 import ScanModal  from "./components/ScanModal";
 
-const API = "http://localhost:8000";
+const API = process.env.REACT_APP_API_URL || "http://localhost:8000";;
 
 export default function App() {
   const [stats,      setStats]      = useState({});
