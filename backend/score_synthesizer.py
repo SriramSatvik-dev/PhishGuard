@@ -119,7 +119,7 @@ def synthesize(ml_result: dict, ti_result: dict, dns_result: dict) -> dict:
         verdict = "legitimate"
         color   = "green"
 
-    print(f"DEBUG synthesize: ml={ml_prob}, vt={vt_malicious}, score={score}, verdict={verdict}")
+    # print(f"DEBUG synthesize: ml={ml_prob}, vt={vt_malicious}, score={score}, verdict={verdict}")
 
     return {
         "risk_score"   : score,
