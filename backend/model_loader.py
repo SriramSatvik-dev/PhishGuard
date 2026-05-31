@@ -2,8 +2,9 @@ import joblib
 import pandas as pd
 import os
 
-MODEL_PATH       = os.path.join(os.path.dirname(__file__), "../ml/models/final_model.pkl")
-FEATURES_PATH    = os.path.join(os.path.dirname(__file__), "../ml/models/feature_names.pkl")
+BASE_DIR      = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH    = os.path.join(BASE_DIR, "ml", "models", "final_model.pkl")
+FEATURES_PATH = os.path.join(BASE_DIR, "ml", "models", "feature_names.pkl")
 
 model         = joblib.load(MODEL_PATH)
 feature_names = joblib.load(FEATURES_PATH)
