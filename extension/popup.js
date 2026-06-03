@@ -1,4 +1,4 @@
-const API_BASE      = "https://phishguard-production-e3d7.up.railway.app";
+const API_BASE      = "https://phishguard-api-8l8a.onrender.com";
 
 // Elements (same as before)
 const urlDisplay   = document.getElementById("urlDisplay");

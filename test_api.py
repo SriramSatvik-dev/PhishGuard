@@ -1,7 +1,7 @@
 import requests
 import json
 
-BASE = "http://localhost:8000"
+BASE = "https://phishguard-api-8l8a.onrender.com"
 
 print("="*50)
 print("PHISHGUARD FINAL LOCAL VERIFICATION")

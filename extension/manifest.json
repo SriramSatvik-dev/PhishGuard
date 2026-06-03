@@ -32,7 +32,7 @@
 ],
 
   "host_permissions": [
-  "https://phishguard-production-e3d7.up.railway.app/*",
+  "https://phishguard-api-8l8a.onrender.com/*",
   "http://*/*",
   "https://*/*"
 ]

@@ -112,7 +112,7 @@ def synthesize(ml_result: dict, ti_result: dict, dns_result: dict) -> dict:
     if score >= 75:
         verdict = "phishing"
         color   = "red"
-    elif score >= 45:
+    elif score >= 35:
         verdict = "suspicious"
         color   = "orange"
     else:

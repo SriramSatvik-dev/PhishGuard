@@ -1,6 +1,6 @@
 // background.js
 
-const API_BASE = "https://phishguard-production-e3d7.up.railway.app";
+const API_BASE = "https://phishguard-api-8l8a.onrender.com";
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
 // ─────────────────────────────────────────
