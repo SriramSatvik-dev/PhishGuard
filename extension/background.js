@@ -69,6 +69,11 @@ async function scanUrl(url, tabId) {
     // Show scanning state on badge immediately
     await setBadge(tabId, "...", "#3b82f6");
 
+    const parsed = new URL(url);
+    if (parsed.pathname === "/") {
+      url = url.replace(/\/$/, "");
+    }
+
     const response = await fetch(`${API_BASE}/scan`, {
       method  : "POST",
       headers : { "Content-Type": "application/json" },

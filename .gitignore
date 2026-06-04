@@ -13,3 +13,5 @@ dashboard/node_modules/
 
 # Local database
 phishguard.db
+
+test_api.py

@@ -44,6 +44,14 @@ class ScanRequest(BaseModel):
 async def scan_url(request: ScanRequest):
     url = request.url.strip()
 
+    # Normalize URL — remove trailing slash from root domains
+    # e.g. https://leetcode.com/ → https://leetcode.com
+    # but keep https://leetcode.com/problemset/ as is (it's a real path)
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    if parsed.path == "/" :
+        url = url.rstrip("/")
+
     if not url.startswith(("http://", "https://")):
         raise HTTPException(status_code=400, detail="URL must start with http:// or https://")
 
