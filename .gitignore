@@ -15,3 +15,5 @@ dashboard/node_modules/
 phishguard.db
 
 test_api.py
+
+*.ipynb
