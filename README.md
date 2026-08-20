@@ -7,7 +7,6 @@
 ![XGBoost](https://img.shields.io/badge/XGBoost-2.0.3-orange)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
 ![Chrome](https://img.shields.io/badge/Chrome-Manifest_V3-yellow?logo=googlechrome)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
 
@@ -26,7 +25,7 @@ PhishGuard automatically scans every website you visit and warns you in real tim
 | Service | URL |
 |---|---|
 | API Docs | https://phishguard-api-8l8a.onrender.com/docs |
-| Analyst Dashboard | https://your-dashboard.onrender.com |
+| Analyst Dashboard | https://phishguard-dashboard-itbr.onrender.com |
 
 ---
 
